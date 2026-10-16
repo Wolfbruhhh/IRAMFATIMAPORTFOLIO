@@ -1,6 +1,6 @@
 # Iram Fatima — personal portfolio
 
-A responsive portfolio built with semantic HTML, CSS and JavaScript, using Vite. Fonts are hosted locally. No API keys, backend or database are needed.
+A responsive portfolio built with semantic HTML, CSS and JavaScript, using Vite. The emerald hero includes moving light fields, contour lines and particles; cards and sections animate on interaction and scroll. A persistent motion toggle and system reduced-motion support keep animation optional. Off-screen and hidden-page animations pause. Fonts are hosted locally. No API keys, backend or database are needed.
 
 ## Develop
 
@@ -19,7 +19,7 @@ npm run build
 npm test
 ```
 
-The production website is generated in `dist/`. Browser tests use the system Chromium at `/usr/bin/chromium`; set `CHROMIUM_PATH` if yours is elsewhere. Tests cover content, portrait and PDF availability, social link destinations, keyboard tabs, clipboard, mobile navigation and horizontal overflow at 360, 390, 768 and 1440 pixels. `npm test` starts and stops its own development server if one is not running.
+The production website is generated in `dist/`. Browser tests use the system Chromium at `/usr/bin/chromium`; set `CHROMIUM_PATH` if yours is elsewhere. Tests cover content, portrait and PDF availability, social link destinations, keyboard tabs, clipboard, mobile navigation and horizontal overflow at 360, 390, 768 and 1440 pixels. Motion checks verify a changing background, pause/resume persistence and reduced-motion behaviour. `npm test` starts and stops its own development server if one is not running.
 
 To check the production build, run `npm run preview -- --port 4173 --strictPort`.
 
@@ -28,6 +28,7 @@ To check the production build, run `npm run preview -- --port 4173 --strictPort`
 - `index.html`: biography, experience, school/college details, links and page metadata.
 - `src/style.css`: responsive visual design.
 - `src/main.js`: navigation, accessible tabs, clipboard and local fonts.
+- `src/motion.js`: scroll reveals, pointer response, reading progress and persistent motion controls.
 - `public/portrait.png`: AI-assisted studio-background edit of the supplied portrait; review likeness before public release.
 - `public/Iram-Fatima-Profile.pdf`: the original résumé supplied by Iram, unchanged.
 

@@ -67,3 +67,5 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '-10% 0px -60% 0px' });
 sections.forEach(section => observer.observe(section));
+
+import './motion.js';

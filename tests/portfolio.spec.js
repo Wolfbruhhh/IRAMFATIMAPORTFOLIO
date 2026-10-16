@@ -58,3 +58,30 @@ for (const width of [360, 390, 768, 1440]) {
     await page.screenshot({ path: `/tmp/iram-${width}.png`, fullPage: true });
   });
 }
+
+test('background moves, can be paused and remembers the visitor preference', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const light = page.locator('.aurora-jade');
+  const start = await light.evaluate(el => getComputedStyle(el).transform);
+  await expect.poll(() => light.evaluate(el => getComputedStyle(el).transform)).not.toBe(start);
+  await page.getByRole('button', { name: 'Pause motion' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
+  expect(await page.evaluate(() => document.getAnimations().filter(a => a.playState === 'running').length)).toBe(0);
+  await page.reload();
+  await expect(page.getByRole('button', { name: 'Enable motion' })).toBeVisible();
+  await page.getByRole('button', { name: 'Enable motion' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
+  await page.locator('#creative').scrollIntoViewIfNeeded();
+  await expect(page.locator('.poetry-card')).toHaveCSS('opacity', '1');
+});
+
+test('reduced-motion preference keeps all content visible without animation', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
+  await expect(page.getByRole('button', { name: 'Enable motion' })).toBeDisabled();
+  await expect(page.locator('.hero-copy h1')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.about-copy')).toHaveCSS('opacity', '1');
+  expect(await page.evaluate(() => document.getAnimations().filter(a => a.playState === 'running').length)).toBe(0);
+});
